@@ -66,15 +66,15 @@ if [[ "$LANG" != *".UTF-8" ]]; then
 fi
 
 if ([ "$osname" = "ubuntu" ]); then
-  mongodb_repo="deb [arch=amd64] https://repo.mongodb.org/apt/$osname $codename/mongodb-org/4.4 multiverse"
+  mongodb_repo="deb [arch=arm64] https://repo.mongodb.org/apt/$osname $codename/mongodb-org/4.4 multiverse"
 # there is no bullseye repo yet for mongo so just use buster on debian 11
 elif ([ "$osname" = "debian" ] && [ $relno -eq 11 ]); then
-  mongodb_repo="deb [arch=amd64] https://repo.mongodb.org/apt/$osname buster/mongodb-org/4.4 main"
+  mongodb_repo="deb [arch=arm64] https://repo.mongodb.org/apt/$osname buster/mongodb-org/4.4 main"
 else
-  mongodb_repo="deb [arch=amd64] https://repo.mongodb.org/apt/$osname $codename/mongodb-org/4.4 main"
+  mongodb_repo="deb [arch=arm64] https://repo.mongodb.org/apt/$osname $codename/mongodb-org/4.4 main"
 fi
 
-postgresql_repo="deb [arch=amd64] https://apt.postgresql.org/pub/repos/apt/ $codename-pgdg main"
+postgresql_repo="deb [arch=arm64] https://apt.postgresql.org/pub/repos/apt/ $codename-pgdg main"
 
 
 # prevents logging issues with some VPS providers like Vultr if this is a freshly provisioned instance that hasn't been rebooted yet
@@ -254,9 +254,9 @@ print_green 'Downloading NATS'
 
 NATS_SERVER_VER=$(grep "^NATS_SERVER_VER" /rmm/api/tacticalrmm/tacticalrmm/settings.py | awk -F'[= "]' '{print $5}')
 nats_tmp=$(mktemp -d -t nats-XXXXXXXXXX)
-wget https://github.com/nats-io/nats-server/releases/download/v${NATS_SERVER_VER}/nats-server-v${NATS_SERVER_VER}-linux-amd64.tar.gz -P ${nats_tmp}
-tar -xzf ${nats_tmp}/nats-server-v${NATS_SERVER_VER}-linux-amd64.tar.gz -C ${nats_tmp}
-sudo mv ${nats_tmp}/nats-server-v${NATS_SERVER_VER}-linux-amd64/nats-server /usr/local/bin/
+wget https://github.com/nats-io/nats-server/releases/download/v${NATS_SERVER_VER}/nats-server-v${NATS_SERVER_VER}-linux-arm64.tar.gz -P ${nats_tmp}
+tar -xzf ${nats_tmp}/nats-server-v${NATS_SERVER_VER}-linux-arm64.tar.gz -C ${nats_tmp}
+sudo mv ${nats_tmp}/nats-server-v${NATS_SERVER_VER}-linux-arm64/nats-server /usr/local/bin/
 sudo chmod +x /usr/local/bin/nats-server
 sudo chown ${USER}:${USER} /usr/local/bin/nats-server
 rm -rf ${nats_tmp}
